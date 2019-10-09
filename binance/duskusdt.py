@@ -1,8 +1,4 @@
-#!/usr/bin/env python3
 
-from jinja2 import Template
-
-data = '''
 from djongo import models
 from pymongo import UpdateOne
 from typing import List, Tuple
@@ -11,7 +7,7 @@ from coin.models.transaction import Transaction
 from utils.time import align_date, now
 
 
-class Transaction{{name}}(models.Model):
+class TransactionBinanceDUSKUSDT(models.Model):
     _id = models.ObjectIdField()
 
     e = models.CharField(verbose_name='거래소명', max_length=15)
@@ -27,7 +23,7 @@ class Transaction{{name}}(models.Model):
     objects = models.DjongoManager()
 
     class Meta:
-        verbose_name = verbose_name_plural = 'Transaction{{name}}'
+        verbose_name = verbose_name_plural = 'TransactionBinanceDUSKUSDT'
         indexes = [
             models.Index(fields=['t'], name='timestamp'),
             models.Index(fields=['e', 'cu', 'f'], name='exch_curr_fiat')
@@ -76,24 +72,3 @@ class Transaction{{name}}(models.Model):
             from_ts=aligned_t, until_ts=t, open_price=open_price)
         )
 
-
-'''
-
-
-mystr = "Binance" + "BTCUSDT"
-tm = Template(data)
-msg = tm.render(name=mystr)
-# print(msg)
-
-data2 = "{{name}}.py"
-tm2 = Template(data2)
-fileName = tm2.render(name='BTCUSDT')
-fileName = fileName.lower()
-
-
-print(fileName)
-
-
-f = open("/home/ericnjin/create-model/binance/" + fileName, 'w')
-f.write(msg)
-f.close()
