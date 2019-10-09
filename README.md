@@ -4,6 +4,7 @@
 ## pre-requisite
 - python 3.6+
 - ccxt
+- jinja2
 
 
 ## description
